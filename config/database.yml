@@ -1,0 +1,31 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: spotfeels_development
+
+test:
+  <<: *default
+  database: spotfeels_test
+
+production:
+  primary: &primary_production
+    <<: *default
+    database: spotfeels_production
+    username: spotfeels
+    password: <%= ENV["SPOTFEELS_DATABASE_PASSWORD"] %>
+  cache:
+    <<: *primary_production
+    database: spotfeels_production_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: spotfeels_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_production
+    database: spotfeels_production_cable
+    migrations_paths: db/cable_migrate
