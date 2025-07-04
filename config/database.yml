@@ -2,6 +2,10 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV["SPOTFEELS_DATABASE_HOST"] %>
+  port: <%= ENV["SPOTFEELS_DATABASE_PORT"] %>
+  username: <%= ENV["SPOTFEELS_DATABASE_USERNAME"] %>
+  password: <%= ENV["SPOTFEELS_DATABASE_PASSWORD"] %>
 
 development:
   <<: *default
