@@ -1,6 +1,385 @@
-<div>
-  <h1 class="font-bold text-4xl">Pages#dashboard</h1>
-  <p>Find me in app/views/pages/dashboard.html.erb</p>
-  <p>Welcome, <%= Current.user.email_address  %> </p>
-  <%= button_to "Logout", session_path, method: :delete %>
+<div class="min-h-screen bg-gray-50">
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-6 py-4">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <span class="text-xl font-bold text-black">SpotFeels</span>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <span class="text-gray-600">Olá, <%= Current.user.email_address %></span>
+          <%= button_to "Sair", session_path, method: :delete, class: "text-gray-500 hover:text-red-600 transition-colors" %>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-6 py-8">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-black mb-2">Criar Nova Playlist</h1>
+      <p class="text-gray-600">Selecione suas preferências e deixe a IA criar a playlist perfeita para você</p>
+    </div>
+
+    <!-- Playlist Creation Form -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+      <form id="playlist-form" class="space-y-8">
+        <!-- Mood Selection -->
+        <div>
+          <h3 class="text-lg font-semibold text-black mb-4 flex items-center">
+            <svg class="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+            Como você está se sentindo hoje?
+          </h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <label class="cursor-pointer">
+              <input type="radio" name="mood" value="feliz" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-4 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <div class="text-2xl mb-2">😊</div>
+                <span class="text-sm font-medium">Feliz</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="mood" value="relaxado" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-4 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <div class="text-2xl mb-2">😌</div>
+                <span class="text-sm font-medium">Relaxado</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="mood" value="energico" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-4 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <div class="text-2xl mb-2">⚡</div>
+                <span class="text-sm font-medium">Energético</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="mood" value="melancolico" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-4 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <div class="text-2xl mb-2">🌙</div>
+                <span class="text-sm font-medium">Melancólico</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="mood" value="motivado" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-4 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <div class="text-2xl mb-2">💪</div>
+                <span class="text-sm font-medium">Motivado</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="mood" value="nostalgico" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-4 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <div class="text-2xl mb-2">🕰️</div>
+                <span class="text-sm font-medium">Nostálgico</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="mood" value="romantico" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-4 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <div class="text-2xl mb-2">💕</div>
+                <span class="text-sm font-medium">Romântico</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="mood" value="focado" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-4 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <div class="text-2xl mb-2">🎯</div>
+                <span class="text-sm font-medium">Focado</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Genre Selection -->
+        <div>
+          <h3 class="text-lg font-semibold text-black mb-4 flex items-center">
+            <svg class="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+            </svg>
+            Gêneros musicais preferidos
+          </h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <label class="cursor-pointer">
+              <input type="checkbox" name="genres" value="pop" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Pop</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="checkbox" name="genres" value="rock" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Rock</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="checkbox" name="genres" value="hip-hop" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Hip Hop</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="checkbox" name="genres" value="eletronica" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Eletrônica</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="checkbox" name="genres" value="jazz" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Jazz</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="checkbox" name="genres" value="reggae" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Reggae</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="checkbox" name="genres" value="indie" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Indie</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="checkbox" name="genres" value="funk" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Funk</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="checkbox" name="genres" value="sertanejo" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Sertanejo</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Era Selection -->
+        <div>
+          <h3 class="text-lg font-semibold text-black mb-4 flex items-center">
+            <svg class="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Época preferida
+          </h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <label class="cursor-pointer">
+              <input type="radio" name="era" value="anos-70" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Anos 70</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="era" value="anos-80" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Anos 80</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="era" value="anos-90" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Anos 90</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="era" value="anos-2000" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Anos 2000</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="era" value="anos-2010" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Anos 2010</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="era" value="atual" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Atual</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="era" value="todas" class="sr-only peer">
+              <div class="border-2 border-gray-200 rounded-lg p-3 text-center hover:border-purple-300 peer-checked:border-purple-600 peer-checked:bg-purple-50 transition-all">
+                <span class="text-sm font-medium">Todas</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Additional Preferences -->
+        <div>
+          <h3 class="text-lg font-semibold text-black mb-4 flex items-center">
+            <svg class="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+            </svg>
+            Preferências adicionais (opcional)
+          </h3>
+          <textarea 
+            name="additional_preferences" 
+            placeholder="Ex: Música para treinar, algo animado, artistas brasileiros, sem músicas muito longas..."
+            class="w-full p-4 border border-gray-300 rounded-lg resize-none h-20 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center pt-4">
+          <button 
+            type="submit" 
+            id="generate-btn"
+            class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-full text-lg font-medium transition-colors inline-flex items-center space-x-2"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            <span>Gerar Playlist</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loading-state" class="hidden bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center mt-6">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-4"></div>
+      <h3 class="text-lg font-semibold text-black mb-2">Criando sua playlist...</h3>
+      <p class="text-gray-600">A IA está analisando suas preferências e selecionando as melhores músicas para você.</p>
+    </div>
+
+    <!-- Success State -->
+    <div id="success-state" class="hidden bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center mt-6">
+      <div id="success-content">
+        <!-- Content will be dynamically updated by JavaScript -->
+      </div>
+    </div>
+  </main>
 </div>
+
+<script>
+document.getElementById('playlist-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Collect form data
+    const formData = new FormData();
+    const mood = document.querySelector('input[name="mood"]:checked')?.value;
+    const era = document.querySelector('input[name="era"]:checked')?.value;
+    const genres = Array.from(document.querySelectorAll('input[name="genres"]:checked')).map(el => el.value);
+    const additionalPreferences = document.querySelector('textarea[name="additional_preferences"]').value;
+    
+    // Validate required fields
+    if (!mood) {
+        alert('Por favor, selecione como você está se sentindo hoje.');
+        return;
+    }
+    
+    // Prepare data
+    const playlistData = {
+        mood: mood,
+        era: era,
+        genres: genres,
+        additional_preferences: additionalPreferences
+    };
+    
+    // Show loading state
+    document.getElementById('loading-state').classList.remove('hidden');
+    document.querySelector('form').classList.add('hidden');
+    
+    // Make API call
+    fetch('/playlists', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ playlist: playlistData })
+    })
+    .then(response => {
+        if (response.status === 401) {
+            // User not authenticated, redirect to login
+            window.location.href = '/login';
+            return;
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (!data) return; // Handle redirect case
+        
+        document.getElementById('loading-state').classList.add('hidden');
+        
+        if (data.success) {
+            document.getElementById('success-state').classList.remove('hidden');
+            
+            // Update success message and show playlist details
+            const successContent = document.getElementById('success-content');
+            successContent.innerHTML = `
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-black mb-2">${data.message}</h3>
+                <p class="text-gray-600 mb-4">Playlist: <strong>${data.playlist.name}</strong></p>
+                <div class="text-left max-w-2xl mx-auto">
+                    <h4 class="font-semibold mb-3">Músicas encontradas:</h4>
+                    <div class="max-h-60 overflow-y-auto space-y-2">
+                        ${data.playlist.tracks.map((track, index) => `
+                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded text-sm">
+                                <div class="flex-1">
+                                    <div class="font-medium">${track.song}</div>
+                                    <div class="text-gray-600">${track.artist}${track.album ? ' • ' + track.album : ''}</div>
+                                </div>
+                                ${track.found ? 
+                                    `<div class="flex items-center space-x-2">
+                                        <span class="text-green-600 text-xs">✓ Encontrada</span>
+                                        ${track.spotify_url ? `<a href="${track.spotify_url}" target="_blank" class="text-green-600 hover:text-green-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.84-.179-.84-.66 0-.42.179-.78.721-.84 4.561-1.021 8.52-.6 11.64 1.32.42.18.479.659.061 1.021zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg></a>` : ''}
+                                    </div>` : 
+                                    '<span class="text-red-600 text-xs">✗ Não encontrada</span>'
+                                }
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="mt-6 space-y-3">
+                    <button onclick="createAnotherPlaylist()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full transition-colors">
+                        Criar Outra Playlist
+                    </button>
+                </div>
+            `;
+        } else {
+            // Show error
+            document.querySelector('form').classList.remove('hidden');
+            
+            if (data.redirect_to_auth) {
+                if (confirm(data.error + '\n\nDeseja configurar o Spotify agora?')) {
+                    window.location.href = '/auth/spotify';
+                }
+            } else {
+                alert('Erro ao criar playlist: ' + (data.error || 'Erro desconhecido'));
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('loading-state').classList.add('hidden');
+        document.querySelector('form').classList.remove('hidden');
+        alert('Erro ao criar playlist. Tente novamente.');
+    });
+});
+
+// Add "Create Another Playlist" functionality
+function createAnotherPlaylist() {
+    document.getElementById('success-state').classList.add('hidden');
+    document.querySelector('form').classList.remove('hidden');
+    document.getElementById('playlist-form').reset();
+}
+</script>

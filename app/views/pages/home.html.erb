@@ -1,5 +1,82 @@
-<div>
-  <h1 class="font-bold text-4xl">Pages#home</h1>
-  <p>Find me in app/views/pages/home.html.erb</p>
-  <%= link_to "Login", new_session_path %>
+<div class="min-h-screen bg-white flex flex-col">
+  <!-- Header -->
+  <header class="py-6 px-6">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <span class="text-xl font-bold text-black">SpotFeels</span>
+      </div>
+      
+      <div class="space-x-4">
+        <%= link_to "Login", new_session_path, class: "text-gray-600 hover:text-purple-600 transition-colors" %>
+        <%= link_to "Cadastro", signup_path, class: "bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full transition-colors" %>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex items-center justify-center px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-5xl md:text-6xl font-bold text-black mb-6">
+        Suas <span class="text-purple-600">emoções</span><br>
+        em playlists únicas
+      </h1>
+      
+      <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+        Crie playlists personalizadas do Spotify baseadas no seu humor, sentimentos e preferências musicais. 
+        Deixe a IA transformar suas emoções em música.
+      </p>
+      
+      <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
+        <%= link_to "Começar Agora", signup_path, class: "block sm:inline-block bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-full text-lg font-medium transition-colors" %>
+        <button class="block sm:inline-block w-full sm:w-auto border border-gray-300 hover:border-purple-600 text-gray-700 hover:text-purple-600 px-8 py-3 rounded-full text-lg font-medium transition-colors">
+          Ver como funciona
+        </button>
+      </div>
+      
+      <!-- Features -->
+      <div class="grid md:grid-cols-3 gap-8 mt-16">
+        <div class="text-center">
+          <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-black mb-2">Baseado em Emoções</h3>
+          <p class="text-gray-600">Selecione seu humor atual e preferências para gerar playlists que combinam perfeitamente com você.</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-black mb-2">IA Avançada</h3>
+          <p class="text-gray-600">Nossa inteligência artificial analisa suas preferências e cria playlists totalmente personalizadas.</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-black mb-2">Integração Spotify</h3>
+          <p class="text-gray-600">Conecte com sua conta Spotify e tenha suas playlists criadas automaticamente na plataforma.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-8 px-6 border-t border-gray-100">
+    <div class="max-w-6xl mx-auto text-center text-gray-500">
+      <p>&copy; 2024 SpotFeels. Transformando emoções em música.</p>
+    </div>
+  </footer>
 </div>

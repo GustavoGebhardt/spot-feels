@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_23_203749) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_26_121104) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "playlists", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.text "description"
+    t.string "spotify_id"
+    t.string "spotify_url"
+    t.text "characteristics"
+    t.text "tracks"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_playlists_on_user_id"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -23,6 +37,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_23_203749) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "spotify_tokens", force: :cascade do |t|
+    t.string "user_id"
+    t.text "access_token"
+    t.text "refresh_token"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "password_digest", null: false
@@ -31,5 +54,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_23_203749) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "playlists", "users"
   add_foreign_key "sessions", "users"
 end
