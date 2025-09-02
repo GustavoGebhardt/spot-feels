@@ -172,25 +172,44 @@ class SpotifyService
   end
 
   def create_spotify_playlist(name, description)
-    # Try different approaches to create playlist
-    user_id = ENV['SPOTIFY_USER_ID']
+    # With user authentication, we can use /me/playlists endpoint
+    Rails.logger.info "Creating playlist using authenticated user endpoint"
     
-    if user_id
-      Rails.logger.info "Creating playlist for configured user: #{user_id}"
-      return create_playlist_for_user(user_id, name, description)
+    uri = URI("#{SPOTIFY_API_BASE}/me/playlists")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    
+    request = Net::HTTP::Post.new(uri)
+    # Clean the access token
+    clean_token = @access_token.to_s.strip.gsub(/\r\n|\r|\n/, '')
+    request['Authorization'] = "Bearer #{clean_token}"
+    request['Content-Type'] = 'application/json'
+    
+    # Clean name and description
+    clean_name = name.to_s.strip.gsub(/\r\n|\r|\n/, ' ')
+    clean_description = description.to_s.strip.gsub(/\r\n|\r|\n/, ' ')
+    
+    request.body = {
+      name: clean_name,
+      description: clean_description,
+      public: true
+    }.to_json
+    
+    Rails.logger.info "Making create playlist request"
+    response = http.request(request)
+    Rails.logger.info "Create playlist response code: #{response.code}"
+    
+    if response.code == '201'
+      playlist_data = JSON.parse(response.body)
+      playlist_id = playlist_data['id']
+      Rails.logger.info "Successfully created playlist: #{playlist_id}"
+      playlist_id
+    else
+      Rails.logger.error "Spotify playlist creation error: #{response.code} - #{response.body}"
+      nil
     end
-    
-    # Fallback: Try to get current user and create playlist
-    Rails.logger.info "No user ID configured, trying to get current user"
-    current_user_id = get_current_user_id
-    
-    if current_user_id
-      Rails.logger.info "Got current user ID: #{current_user_id}"
-      Rails.logger.info "Add this to your .env file: SPOTIFY_USER_ID=#{current_user_id}"
-      return create_playlist_for_user(current_user_id, name, description)
-    end
-    
-    Rails.logger.error "Could not determine user ID for playlist creation"
+  rescue => e
+    Rails.logger.error "Spotify playlist creation request error: #{e.class.name}: #{e.message}"
     nil
   end
 

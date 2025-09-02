@@ -238,12 +238,9 @@
           <button 
             type="submit" 
             id="generate-btn"
-            class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-full text-lg font-medium transition-colors inline-flex items-center space-x-2"
+            class="bg-black hover:bg-gray-800 text-black px-8 py-3 rounded-full text-lg font-medium transition-colors inline-flex items-center space-x-2"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-            </svg>
-            <span>Gerar Playlist</span>
+            Gerar Playlist
           </button>
         </div>
       </form>
@@ -321,40 +318,65 @@ document.getElementById('playlist-form').addEventListener('submit', function(e) 
             
             // Update success message and show playlist details
             const successContent = document.getElementById('success-content');
-            successContent.innerHTML = `
-                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-black mb-2">${data.message}</h3>
-                <p class="text-gray-600 mb-4">Playlist: <strong>${data.playlist.name}</strong></p>
-                <div class="text-left max-w-2xl mx-auto">
-                    <h4 class="font-semibold mb-3">Músicas encontradas:</h4>
-                    <div class="max-h-60 overflow-y-auto space-y-2">
-                        ${data.playlist.tracks.map((track, index) => `
-                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded text-sm">
-                                <div class="flex-1">
-                                    <div class="font-medium">${track.song}</div>
-                                    <div class="text-gray-600">${track.artist}${track.album ? ' • ' + track.album : ''}</div>
-                                </div>
-                                ${track.found ? 
-                                    `<div class="flex items-center space-x-2">
-                                        <span class="text-green-600 text-xs">✓ Encontrada</span>
-                                        ${track.spotify_url ? `<a href="${track.spotify_url}" target="_blank" class="text-green-600 hover:text-green-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.84-.179-.84-.66 0-.42.179-.78.721-.84 4.561-1.021 8.52-.6 11.64 1.32.42.18.479.659.061 1.021zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg></a>` : ''}
-                                    </div>` : 
-                                    '<span class="text-red-600 text-xs">✗ Não encontrada</span>'
-                                }
-                            </div>
-                        `).join('')}
+            
+            // Check if we have playlist URL or tracks list
+            if (data.playlist_url) {
+                // Real playlist created on Spotify
+                successContent.innerHTML = `
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
                     </div>
-                </div>
-                <div class="mt-6 space-y-3">
-                    <button onclick="createAnotherPlaylist()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full transition-colors">
-                        Criar Outra Playlist
-                    </button>
-                </div>
-            `;
+                    <h3 class="text-lg font-semibold text-black mb-2">✅ Playlist criada no Spotify!</h3>
+                    <p class="text-gray-600 mb-6">Sua playlist foi criada com sucesso e está disponível no seu Spotify.</p>
+                    
+                    <div class="space-y-3">
+                        <a href="${data.playlist_url}" target="_blank" class="bg-green-600 hover:bg-green-700 text-black px-8 py-3 rounded-full transition-colors inline-flex items-center space-x-2 text-lg font-medium">
+                            <span>Abrir Playlist no Spotify</span>
+                        </a>
+                        <button onclick="createAnotherPlaylist()" class="block bg-black hover:bg-gray-800 text-black px-6 py-2 rounded-full transition-colors">
+                            Criar Outra Playlist
+                        </button>
+                    </div>
+                `;
+            } else if (data.playlist && data.playlist.tracks) {
+                // Virtual playlist with track list
+                successContent.innerHTML = `
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-black mb-2">${data.message}</h3>
+                    <p class="text-gray-600 mb-4">Playlist: <strong>${data.playlist.name}</strong></p>
+                    <div class="text-left max-w-2xl mx-auto">
+                        <h4 class="font-semibold mb-3">Músicas encontradas:</h4>
+                        <div class="max-h-60 overflow-y-auto space-y-2">
+                            ${data.playlist.tracks.map((track, index) => `
+                                <div class="flex items-center justify-between p-2 bg-gray-50 rounded text-sm">
+                                    <div class="flex-1">
+                                        <div class="font-medium">${track.song}</div>
+                                        <div class="text-gray-600">${track.artist}${track.album ? ' • ' + track.album : ''}</div>
+                                    </div>
+                                    ${track.found ? 
+                                        `<div class="flex items-center space-x-2">
+                                            <span class="text-green-600 text-xs">✓ Encontrada</span>
+                                            ${track.spotify_url ? `<a href="${track.spotify_url}" target="_blank" class="text-green-600 hover:text-green-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.84-.179-.84-.66 0-.42.179-.78.721-.84 4.561-1.021 8.52-.6 11.64 1.32.42.18.479.659.061 1.021zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg></a>` : ''}
+                                        </div>` : 
+                                        '<span class="text-red-600 text-xs">✗ Não encontrada</span>'
+                                    }
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="mt-6 space-y-3">
+                        <button onclick="createAnotherPlaylist()" class="bg-black hover:bg-gray-800 text-white px-6 py-2 rounded-full transition-colors">
+                            Criar Outra Playlist
+                        </button>
+                    </div>
+                `;
+            }
         } else {
             // Show error
             document.querySelector('form').classList.remove('hidden');
